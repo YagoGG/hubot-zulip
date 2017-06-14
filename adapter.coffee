@@ -20,7 +20,8 @@
 # THE SOFTWARE.
 
 zulip = require('zulip')
-{Adapter, TextMessage, EnterMessage, LeaveMessage, User} = require "../hubot/index"
+{Adapter, TextMessage, EnterMessage, LeaveMessage, User} =
+    require "../hubot/index"
 
 class Zulip extends Adapter
     send: (envelope, strings...) ->
@@ -33,7 +34,8 @@ class Zulip extends Adapter
         @send envelope, strings.map((str) -> "**#{str}**")...
 
     reply: (envelope, strings...) ->
-        @send envelope, strings.map((str) -> "@**#{envelope.user.name}**: #{str}")...
+        @send envelope, strings.map((str) ->
+            "@**#{envelope.user.name}**: #{str}")...
 
     run: ->
         @connected = false
@@ -46,7 +48,8 @@ class Zulip extends Adapter
 
         @zulip.registerEventQueue
             event_types: ['message']
-            all_public_streams: !process.env.HUBOT_ZULIP_ONLY_SUBSCRIBED_STREAMS?
+            all_public_streams:
+                !process.env.HUBOT_ZULIP_ONLY_SUBSCRIBED_STREAMS?
 
         @zulip.on 'registered', (resp) =>
             if not @connected
@@ -74,8 +77,8 @@ class Zulip extends Adapter
         author = @robot.brain.userForId msg.sender_email,
             name: msg.sender_full_name
             email_address: msg.sender_email
-        # Work around github/hubot#670 by setting room separately. If we pass it
-        # to userForId, it could delete the existing user from the brain.
+        # Work around github/hubot#670 by setting room separately. If we pass
+        # it to userForId, it could delete the existing user from the brain.
         author.room = room_for_message(msg)
         author
 
