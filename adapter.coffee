@@ -86,17 +86,19 @@ class Zulip extends Adapter
 exports.use = (robot) ->
     new Zulip robot
 
-encode = (s) ->
-    s.replace(/%/g,  '%25')
-     .replace(/\+/g, '%2B')
-     .replace(/:/g,  '%3A')
-     .replace(/[ ]/g,  '+')
+encode = (string) ->
+    string
+        .replace(/%/g,  '%25')
+        .replace(/\+/g, '%2B')
+        .replace(/:/g,  '%3A')
+        .replace(/[ ]/g,  '+')
 
-decode = (s) ->
-    s.replace(/\+/g,  ' ')
-     .replace(/%3A/g, ':')
-     .replace(/%2B/g, '+')
-     .replace(/%25/g, '%')
+decode = (string) ->
+    string
+        .replace(/\+/g,  ' ')
+        .replace(/%3A/g, ':')
+        .replace(/%2B/g, '+')
+        .replace(/%25/g, '%')
 
 room_for_message = (msg) ->
     if msg.type == 'private'
